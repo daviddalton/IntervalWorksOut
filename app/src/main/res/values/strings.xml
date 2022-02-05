@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">IntervalWorksOut</string>
+    <string name="title_home">Home</string>
+    <string name="title_set">Sets</string>
+
+    <string name="core">Core</string>
+    <string name="stretch">Stretch</string>
+    <string name="bodyweight">Bodyweight</string>
+    <string name="formDrill">Form Drill</string>
+    <string name="new_set_hint">Click to create a new workout</string>
+
+</resources>
