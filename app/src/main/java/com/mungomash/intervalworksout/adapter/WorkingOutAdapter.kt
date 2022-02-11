@@ -30,26 +30,26 @@ class WorkingOutAdapter(private val context: Context, private val dataset: List<
         holder.nameText.text = item.name
 
         //TODO: make this only count down when you are hovered over the item
-            object : CountDownTimer(item.prep, 1000) {
+        object : CountDownTimer(item.prep, 1000) {
 
-                override fun onTick(millisUntilFinished: Long) {
-                    holder.timer.text = (millisUntilFinished / 1000).toString()
-                    //add a text element that will show we are either doing core/stretch/lift/drill or preping/switch
-                }
+            override fun onTick(millisUntilFinished: Long) {
+                holder.timer.text = (millisUntilFinished / 1000).toString()
+                //TODO: add a text element that will show we are either doing core/stretch/lift/drill or preping/switch
+            }
 
-                override fun onFinish() {
-                    object : CountDownTimer(item.duration, 1000) {
+            override fun onFinish() {
+                object : CountDownTimer(item.duration, 1000) {
 
-                        override fun onTick(millisUntilFinished: Long) {
-                            holder.timer.text = (millisUntilFinished / 1000).toString()
-                        }
+                    override fun onTick(millisUntilFinished: Long) {
+                        holder.timer.text = (millisUntilFinished / 1000).toString()
+                    }
 
-                        override fun onFinish() {
-                            recyclerView.smoothScrollToPosition(holder.adapterPosition + 1)
-                        }
-                    }.start()
-                }
-            }.start()
+                    override fun onFinish() {
+                        recyclerView.smoothScrollToPosition(holder.adapterPosition + 1)
+                    }
+                }.start()
+            }
+        }.start()
     }
 
     override fun getItemCount() = dataset.size
