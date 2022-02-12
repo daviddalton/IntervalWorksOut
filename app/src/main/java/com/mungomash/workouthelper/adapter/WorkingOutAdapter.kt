@@ -1,4 +1,4 @@
-package com.mungomash.intervalworksout.adapter
+package com.mungomash.workouthelper.adapter
 
 import android.content.Context
 import android.os.CountDownTimer
@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.mungomash.intervalworksout.R
-import com.mungomash.intervalworksout.WorkingOutActivity
-import com.mungomash.intervalworksout.model.Exercise
+import com.mungomash.workouthelper.R
+import com.mungomash.workouthelper.model.Exercise
 
 class WorkingOutAdapter(private val context: Context, private val dataset: List<Exercise>, private val recyclerView: RecyclerView) : RecyclerView.Adapter<WorkingOutAdapter.WorkingOutViewHolder>() {
 

@@ -1,4 +1,4 @@
-package com.mungomash.intervalworksout
+package com.mungomash.workouthelper
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

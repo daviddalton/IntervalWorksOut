@@ -1,15 +1,21 @@
-package com.mungomash.intervalworksout
+package com.mungomash.workouthelper
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
-import android.provider.AlarmClock.EXTRA_MESSAGE
+import android.provider.ContactsContract
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.mungomash.intervalworksout.adapter.WorkoutAdapter
-import com.mungomash.intervalworksout.data.Datasource
-import com.mungomash.intervalworksout.databinding.ActivityMainBinding
-import com.mungomash.intervalworksout.model.Workout
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.mungomash.workouthelper.adapter.WorkoutAdapter
+import com.mungomash.workouthelper.data.Datasource
+import com.mungomash.workouthelper.databinding.ActivityMainBinding
+import com.mungomash.workouthelper.model.Workout
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,8 +27,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val userId = intent.getStringExtra("userId")
+
         // Initialize data.
-        val myDataset = Datasource().loadSets()
+        val myDataset = Datasource().getAllWorkouts(this)
+
+        val user = FirebaseAuth.getInstance().currentUser
+        // Datasource().getAllExercises(this)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView.adapter = WorkoutAdapter(WorkoutAdapter.OnClickListener { item ->
@@ -34,10 +45,10 @@ class MainActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
     }
 
-    fun handleClick(item: Workout) {
-        if (item.id != 9999) {
+    private fun handleClick(item: Workout) {
+        if (item.id != "9999") {
             val intent = Intent(this, WorkoutActivity::class.java).apply {
-                putExtra("workoutId", item.id.toString())
+                putExtra("workoutId", item.id)
             }
             startActivity(intent)
         } else {

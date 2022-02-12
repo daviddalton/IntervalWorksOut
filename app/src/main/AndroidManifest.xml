@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mungomash.intervalworksout">
+    package="com.mungomash.workouthelper">
 
     <application
         android:allowBackup="true"
@@ -10,16 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IntervalWorksOut">
         <activity
-            android:name=".MainActivity"
+            android:name="com.mungomash.workouthelper.MainActivity">
+        </activity>
+        <activity android:name="com.mungomash.workouthelper.WorkoutActivity" />
+        <activity android:name="com.mungomash.workouthelper.WorkingOutActivity"/>
+        <activity
+            android:name="com.mungomash.workouthelper.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".WorkoutActivity" />
-        <activity android:name=".WorkingOutActivity"/>
     </application>
 
 </manifest>

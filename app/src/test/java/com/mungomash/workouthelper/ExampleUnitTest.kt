@@ -1,4 +1,4 @@
-package com.mungomash.intervalworksout
+package com.mungomash.workouthelper
 
 import org.junit.Test
 

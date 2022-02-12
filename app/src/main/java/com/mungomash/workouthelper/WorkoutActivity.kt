@@ -1,4 +1,4 @@
-package com.mungomash.intervalworksout
+package com.mungomash.workouthelper
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,9 +6,9 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.mungomash.intervalworksout.adapter.SingleWorkoutAdapter
-import com.mungomash.intervalworksout.data.Datasource
-import com.mungomash.intervalworksout.databinding.ActivityWorkoutBinding
+import com.mungomash.workouthelper.adapter.SingleWorkoutAdapter
+import com.mungomash.workouthelper.data.Datasource
+import com.mungomash.workouthelper.databinding.ActivityWorkoutBinding
 
 class WorkoutActivity: AppCompatActivity() {
 

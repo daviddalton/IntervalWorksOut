@@ -1,18 +1,12 @@
-package com.mungomash.intervalworksout
+package com.mungomash.workouthelper
 
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import com.mungomash.intervalworksout.adapter.WorkingOutAdapter
-import com.mungomash.intervalworksout.data.Datasource
-import com.mungomash.intervalworksout.databinding.ActivityMainBinding
-import com.mungomash.intervalworksout.model.Exercise
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import org.w3c.dom.Text
+import com.mungomash.workouthelper.data.Datasource
+import com.mungomash.workouthelper.databinding.ActivityMainBinding
+import com.mungomash.workouthelper.model.Workout
 
 class WorkingOutActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -40,21 +34,30 @@ class WorkingOutActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.title_text).text = data.name
         findViewById<TextView>(R.id.type_text).text = this.getText(data.workoutType)
 
-        for (exercise: Exercise in data.exercises!!) {
-            nameText.text = exercise.name
-            object : CountDownTimer(exercise.prep, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                    timer.text = (millisUntilFinished / 1000).toString()
-                }
-                override fun onFinish() { }
-            }.start()
-            object : CountDownTimer(exercise.duration, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                    timer.text = (millisUntilFinished / 1000).toString()
-                }
-                override fun onFinish() { }
-            }.start()
-        }
+        runTimer(data, timer, nameText, 1)
+
+    }
+
+    fun runTimer(data: Workout, timer: TextView, name: TextView, index: Int) {
+        var exercise = data.exercises!![index]
+        name.text = exercise.name
+        object : CountDownTimer(exercise.prep, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                timer.text = (millisUntilFinished / 1000).toString()
+            }
+            override fun onFinish() {
+                object : CountDownTimer(exercise.duration, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                        timer.text = (millisUntilFinished / 1000).toString()
+                    }
+                    override fun onFinish() {
+                        if (data.exercises.size > index) {
+                            runTimer(data, timer, name, index + 1)
+                        }
+                    }
+                }.start()
+            }
+        }.start()
 
     }
 }
