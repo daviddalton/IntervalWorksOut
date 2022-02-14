@@ -32,7 +32,7 @@ class WorkingOutActivity : AppCompatActivity() {
         val timer: TextView = findViewById(R.id.timer)
 
         findViewById<TextView>(R.id.title_text).text = data.name
-        findViewById<TextView>(R.id.type_text).text = this.getText(data.workoutType)
+        // findViewById<TextView>(R.id.type_text).text = this.getText(data.workoutType)
 
         runTimer(data, timer, nameText, 1)
 

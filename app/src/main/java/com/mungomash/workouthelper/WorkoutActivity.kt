@@ -37,7 +37,7 @@ class WorkoutActivity: AppCompatActivity() {
         val type = findViewById<TextView>(R.id.workout_type_text)
 
         title.text = data.name
-        type.text = this.getText(data.workoutType)
+        // type.text = this.getText(data.workoutType)
 
         val startButton = findViewById<Button>(R.id.start_button)
         startButton.setOnClickListener {

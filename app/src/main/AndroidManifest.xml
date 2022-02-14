@@ -23,6 +23,7 @@
             </intent-filter>
 
         </activity>
+        <activity android:name="com.mungomash.workouthelper.HomeActivity" />
     </application>
 
 </manifest>

@@ -30,7 +30,7 @@ class WorkoutAdapter(private val onClickListener: OnClickListener, private val c
     override fun onBindViewHolder(holder: WorkoutViewHolder, position: Int) {
         val item = dataset[position]
         holder.textView.text = item.name
-        holder.typeTextView.text = context.getText(item.workoutType)
+        // holder.typeTextView.text = context.getText(item.workoutType)
 
         holder.itemView.setOnClickListener {
             onClickListener.onClick(item)

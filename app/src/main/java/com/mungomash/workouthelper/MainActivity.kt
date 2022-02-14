@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
@@ -30,7 +31,9 @@ class MainActivity : AppCompatActivity() {
         val userId = intent.getStringExtra("userId")
 
         // Initialize data.
-        val myDataset = Datasource().getAllWorkouts(this)
+        val myDataset = Datasource().loadSets()
+
+        val data = Datasource().getAllWorkouts(this)
 
         val user = FirebaseAuth.getInstance().currentUser
         // Datasource().getAllExercises(this)

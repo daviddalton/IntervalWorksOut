@@ -4,7 +4,9 @@ import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mungomash.workouthelper.R
@@ -56,14 +58,14 @@ class Datasource {
 
     fun loadExercises(): List<Exercise> {
         return listOf<Exercise>(
-            Exercise("Plank", 4000, 7000, "Core"),
-            Exercise("Russian Twists", 3000, 7000, "Core"),
-            Exercise("Flutter Kicks", 4000, 7000, "Core"),
-            Exercise("V-Ups", 3000, 7000, "Core"),
-            Exercise("Crunches", 4000, 7000, "Core"),
-            Exercise("Windshield Wipers", 3000, 7000, "Core"),
-            Exercise("Touch Your Toes", 6000, 7000, "Stretch"),
-            Exercise("Butterfly", 6000, 7000, "Stretch"),
+            Exercise("1", "Plank", 4000, 7000, "Core"),
+            Exercise("2", "Russian Twists", 3000, 7000, "Core"),
+            Exercise("3", "Flutter Kicks", 4000, 7000, "Core"),
+            Exercise("4", "V-Ups", 3000, 7000, "Core"),
+            Exercise("5", "Crunches", 4000, 7000, "Core"),
+            Exercise("6", "Windshield Wipers", 3000, 7000, "Core"),
+            Exercise("7", "Touch Your Toes", 6000, 7000, "Stretch"),
+            Exercise("8", "Butterfly", 6000, 7000, "Stretch"),
 
         )
     }
@@ -98,31 +100,34 @@ class Datasource {
         db.collection("workouts").add(workout)
     }
 
-    fun createExerciseForEmma(context: Context) {
+    fun createExercise(context: Context, name: String, type: String, duration: Long, prepDuration: Long) {
         FirebaseApp.initializeApp(context)
         val db = Firebase.firestore
 
+        //TODO: pass the user id as the createdBy
         val exercise = hashMapOf(
-            "name" to "Plank",
-            "type" to "Core",
-            "duration" to 40000,
-            "prepDuration" to 6000
+            "name" to name,
+            "type" to type,
+            "duration" to duration,
+            "prepDuration" to prepDuration,
+            "createdBy" to 0
         )
 
         db.collection("exercises").add(exercise)
     }
 
-    fun getAllExercises(context: Context) {
+    fun getAllExercises(context: Context, listener: OnSuccessListener<QuerySnapshot>) {
         FirebaseApp.initializeApp(context)
         val db = Firebase.firestore
 
-        db.collection("exercises")
-            .get()
-            .addOnSuccessListener { exercises ->
-                for (e in exercises) {
-                    Log.d(TAG, "${e.id} => ${e.data}")
-                }
-            }
+        db.collection("exercises").get().addOnSuccessListener(listener)
+    }
+
+    fun getSingleExercise(context: Context, id: String) {
+        FirebaseApp.initializeApp(context)
+        val db = Firebase.firestore
+
+        db.collection("$id")
     }
 
     fun getAllWorkouts(context: Context) {
@@ -134,8 +139,10 @@ class Datasource {
             .addOnSuccessListener { workouts ->
                 val list = buildList<Workout> {
                     for (w in workouts) {
-                        val json = JsonParser.parse(w.data.toString())
-                        print(json)
+                        val name = w.data.get("name").toString()
+                        val exercises = arrayOf(w.data.get("exercises"))
+
+                        val workout = Workout("1", name, loadExercises())
                     }
                 }
 
