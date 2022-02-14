@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         // Initialize data.
         val myDataset = Datasource().loadSets()
 
-        val data = Datasource().getAllWorkouts(this)
+        //val data = Datasource().getAllWorkouts(this)
 
         val user = FirebaseAuth.getInstance().currentUser
         // Datasource().getAllExercises(this)

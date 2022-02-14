@@ -11,6 +11,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mungomash.workouthelper.R
 import com.mungomash.workouthelper.model.Exercise
+import com.mungomash.workouthelper.model.ExerciseRef
 import com.mungomash.workouthelper.model.Workout
 import io.grpc.internal.JsonParser
 
@@ -56,16 +57,16 @@ class Datasource {
         return Workout("4","Standard Form Drills", loadExercises())
     }
 
-    fun loadExercises(): List<Exercise> {
-        return listOf<Exercise>(
-            Exercise("1", "Plank", 4000, 7000, "Core"),
-            Exercise("2", "Russian Twists", 3000, 7000, "Core"),
-            Exercise("3", "Flutter Kicks", 4000, 7000, "Core"),
-            Exercise("4", "V-Ups", 3000, 7000, "Core"),
-            Exercise("5", "Crunches", 4000, 7000, "Core"),
-            Exercise("6", "Windshield Wipers", 3000, 7000, "Core"),
-            Exercise("7", "Touch Your Toes", 6000, 7000, "Stretch"),
-            Exercise("8", "Butterfly", 6000, 7000, "Stretch"),
+    fun loadExercises(): Array<ExerciseRef> {
+        return arrayOf<ExerciseRef>(
+            ExerciseRef("1"),
+            ExerciseRef("2"),
+            ExerciseRef("3"),
+            ExerciseRef("4"),
+            ExerciseRef("5"),
+            ExerciseRef("6"),
+            ExerciseRef("7"),
+            ExerciseRef("8"),
 
         )
     }
@@ -130,23 +131,11 @@ class Datasource {
         db.collection("$id")
     }
 
-    fun getAllWorkouts(context: Context) {
+    fun getAllWorkouts(context: Context, listener: OnSuccessListener<QuerySnapshot>) {
         FirebaseApp.initializeApp(context)
         val db = Firebase.firestore
 
-        db.collection("workouts")
-            .get()
-            .addOnSuccessListener { workouts ->
-                val list = buildList<Workout> {
-                    for (w in workouts) {
-                        val name = w.data.get("name").toString()
-                        val exercises = arrayOf(w.data.get("exercises"))
-
-                        val workout = Workout("1", name, loadExercises())
-                    }
-                }
-
-            }
+        db.collection("workouts").get().addOnSuccessListener(listener)
     }
 
 }

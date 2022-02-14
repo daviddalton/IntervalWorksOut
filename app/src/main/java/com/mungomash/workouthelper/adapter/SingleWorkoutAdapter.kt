@@ -27,9 +27,9 @@ class SingleWorkoutAdapter(private val context: Context, private val workout: Wo
 
     override fun onBindViewHolder(holder: SingleWorkoutViewHolder, position: Int) {
         val item = workout.exercises!![position]
-        holder.title.text = item.name
-        holder.duration.text = (item.duration / 1000).toString() + "s"
-        holder.rest.text = "Rest: " + (item.prep / 1000).toString() + "s"
+//        holder.title.text = item.name
+//        holder.duration.text = (item.duration / 1000).toString() + "s"
+//        holder.rest.text = "Rest: " + (item.prep / 1000).toString() + "s"
     }
 
     override fun getItemCount() = workout.exercises!!.size

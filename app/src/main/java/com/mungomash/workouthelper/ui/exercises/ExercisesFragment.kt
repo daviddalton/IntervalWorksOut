@@ -22,25 +22,17 @@ import com.mungomash.workouthelper.model.Exercise
 class ExercisesFragment : Fragment(), OnSuccessListener<QuerySnapshot> {
 
     private var _binding: FragmentExercisesBinding? = null
-
     private var recyclerView: RecyclerView? = null
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        // Initialize data.
-//        val myDataset = Datasource().loadSets()
 
         Datasource().getAllExercises(this.requireContext(), this)
-
-        val homeViewModel = ViewModelProvider(this).get(ExercisesViewModel::class.java)
 
         _binding = FragmentExercisesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         recyclerView = root.findViewById(R.id.exercises_view)
-
         val button= root.findViewById<Button>(R.id.new_exercise_button)
 
         return root
