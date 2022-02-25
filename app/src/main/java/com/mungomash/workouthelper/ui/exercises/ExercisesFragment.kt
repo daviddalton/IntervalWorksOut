@@ -1,6 +1,7 @@
 package com.mungomash.workouthelper.ui.exercises
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.QuerySnapshot
+import com.mungomash.workouthelper.HomeActivity
+import com.mungomash.workouthelper.NewExerciseActivity
 import com.mungomash.workouthelper.R
 import com.mungomash.workouthelper.adapter.ExercisesAdapter
 import com.mungomash.workouthelper.data.Datasource
@@ -33,7 +36,13 @@ class ExercisesFragment : Fragment(), OnSuccessListener<QuerySnapshot> {
         val root: View = binding.root
 
         recyclerView = root.findViewById(R.id.exercises_view)
-        val button= root.findViewById<Button>(R.id.new_exercise_button)
+        val button = root.findViewById<Button>(R.id.new_exercise_button)
+
+        button.setOnClickListener {
+            val intent = Intent(activity, NewExerciseActivity::class.java).apply {
+            }
+            startActivity(intent)
+        }
 
         return root
     }

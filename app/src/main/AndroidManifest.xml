@@ -24,6 +24,7 @@
 
         </activity>
         <activity android:name="com.mungomash.workouthelper.HomeActivity" />
+        <activity android:name="com.mungomash.workouthelper.NewExerciseActivity" />
     </application>
 
 </manifest>
