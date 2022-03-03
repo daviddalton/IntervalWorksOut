@@ -6,14 +6,13 @@ import android.content.Context
 import android.util.Log
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.mungomash.workouthelper.R
-import com.mungomash.workouthelper.model.Exercise
 import com.mungomash.workouthelper.model.ExerciseRef
 import com.mungomash.workouthelper.model.Workout
-import io.grpc.internal.JsonParser
 
 class Datasource {
 
@@ -102,19 +101,27 @@ class Datasource {
     }
 
     fun createExercise(context: Context, name: String, type: String, duration: Long, prepDuration: Long) {
+
         FirebaseApp.initializeApp(context)
         val db = Firebase.firestore
 
-        //TODO: pass the user id as the createdBy
-        val exercise = hashMapOf(
-            "name" to name,
-            "type" to type,
-            "duration" to duration,
-            "prepDuration" to prepDuration,
-            "createdBy" to 0
-        )
+        var auth: FirebaseAuth = Firebase.auth
 
-        db.collection("exercises").add(exercise)
+        val user = auth.currentUser
+
+        if (user != null) {
+            //TODO: pass the user id as the createdBy
+            val exercise = hashMapOf(
+                "name" to name,
+                "type" to type,
+                "duration" to duration,
+                "prepDuration" to prepDuration,
+                "createdBy" to user.uid
+            )
+
+            db.collection("exercises").add(exercise)
+        }
+
     }
 
     fun getAllExercises(context: Context, listener: OnSuccessListener<QuerySnapshot>) {

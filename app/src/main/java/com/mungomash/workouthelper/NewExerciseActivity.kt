@@ -1,6 +1,8 @@
 package com.mungomash.workouthelper
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -13,19 +15,19 @@ class NewExerciseActivity: AppCompatActivity() {
 
         val button = findViewById<Button>(R.id.add_button)
 
-        var duration = findViewById<EditText>(R.id.enterDurationTime).text.toString()
-        var prep = findViewById<EditText>(R.id.enterPrepTime).text.toString()
-        var name = findViewById<EditText>(R.id.enterExerciseName).text.toString()
+        var duration = findViewById<EditText>(R.id.enterDurationTime)
+        var prep = findViewById<EditText>(R.id.enterPrepTime)
+        var name = findViewById<EditText>(R.id.enterExerciseName)
 
         button.setOnClickListener {
-            if (name.isNotEmpty()) {
-                if (duration.isEmpty()) {
-                    duration = "0"
+            if (name.text.toString().isNotEmpty()) {
+                if (duration.text.toString().isEmpty()) {
+                    duration.setText("0")
                 }
-                if (prep.isEmpty()) {
-                    prep = "0"
+                if (prep.text.toString().isEmpty()) {
+                    prep.setText("0")
                 }
-                Datasource().createExercise(this, name, "Core", duration.toLong() * 1000, prep.toLong() * 1000)
+                Datasource().createExercise(this, name.text.toString(), "Core", duration.text.toString().toLong() * 1000, prep.text.toString().toLong() * 1000)
             }
         }
     }

@@ -3,7 +3,6 @@ package com.mungomash.workouthelper
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -15,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.mungomash.workouthelper.databinding.ActivityMainBinding
 
 class LoginActivity : AppCompatActivity() {
 
@@ -33,8 +31,8 @@ class LoginActivity : AppCompatActivity() {
 
         val signInButton = findViewById<Button>(R.id.sign_in)
         signInButton.setOnClickListener {
-            if (!email.text.isEmpty()) {
-                if (!password.text.isEmpty()) {
+            if (email.text.isNotEmpty()) {
+                if (password.text.isNotEmpty()) {
                     signIn()
                 }
             }
@@ -136,7 +134,7 @@ class LoginActivity : AppCompatActivity() {
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             val intent = Intent(this, HomeActivity::class.java).apply {
-                putExtra("userId", user!!.uid.toString())
+                putExtra("userId", user.uid.toString())
             }
             startActivity(intent)
         }
