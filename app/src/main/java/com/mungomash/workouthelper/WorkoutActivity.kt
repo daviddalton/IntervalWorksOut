@@ -6,13 +6,19 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.firestore.DocumentSnapshot
 import com.mungomash.workouthelper.adapter.SingleWorkoutAdapter
 import com.mungomash.workouthelper.data.Datasource
 import com.mungomash.workouthelper.databinding.ActivityWorkoutBinding
+import com.mungomash.workouthelper.model.Exercise
+import com.mungomash.workouthelper.model.Workout
 
-class WorkoutActivity: AppCompatActivity() {
+class WorkoutActivity: AppCompatActivity(), OnSuccessListener<DocumentSnapshot> {
 
     private lateinit var binding: ActivityWorkoutBinding
+    private lateinit var workoutToBeSent: Workout
+    private lateinit var exercisesToBeShown: MutableList<Exercise>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,21 +29,7 @@ class WorkoutActivity: AppCompatActivity() {
         val id = intent.getStringExtra("workoutId")
 
         // Initialize data.
-        val data = Datasource().workoutBasedOnId(id!!.toInt())
-
-        val singleWorkoutView = findViewById<RecyclerView>(R.id.exercises_recycler)
-        singleWorkoutView.adapter = SingleWorkoutAdapter(this, data)
-
-        // Use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        singleWorkoutView.setHasFixedSize(true)
-
-
-        val title = findViewById<TextView>(R.id.workout_name_text)
-        val type = findViewById<TextView>(R.id.workout_type_text)
-
-        title.text = data.name
-        // type.text = this.getText(data.workoutType)
+        Datasource().getSingleWorkout(this, id!!, this)
 
         val startButton = findViewById<Button>(R.id.start_button)
         startButton.setOnClickListener {
@@ -45,10 +37,40 @@ class WorkoutActivity: AppCompatActivity() {
         }
     }
 
-    fun startWorkout(id: String) {
+    private fun startWorkout(id: String) {
         val intent = Intent(this, WorkingOutActivity::class.java).apply {
-            putExtra("workoutId", id)
+            putExtra("workoutId", workoutToBeSent.id)
         }
         startActivity(intent)
+    }
+
+    override fun onSuccess(workout: DocumentSnapshot?) {
+
+        if (workout != null) {
+            val exercises: List<String> = workout.data!!["exercises"] as List<String>
+            val w = Workout(workout.id, workout.data!!["name"].toString(), exercises)
+
+            workoutToBeSent = w
+
+            for (e in exercises) {
+                val result = Datasource().getSingleExercise(this, e)
+                if (result != null) {
+                    exercisesToBeShown.add(result)
+                }
+
+            }
+
+            val singleWorkoutView = findViewById<RecyclerView>(R.id.exercises_recycler)
+            singleWorkoutView.adapter = SingleWorkoutAdapter(this, exercisesToBeShown)
+            singleWorkoutView.setHasFixedSize(true)
+
+            val title = findViewById<TextView>(R.id.workout_name_text)
+
+            title.text = w.name
+        }
+
+
+
+
     }
 }

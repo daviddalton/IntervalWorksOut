@@ -59,8 +59,8 @@ class ExercisesFragment : Fragment(), OnSuccessListener<QuerySnapshot> {
 
         for (e in exercises) {
 
-            val duration = e.data.get("duration") as Long
-            val createdBy = e.data.get("createdBy")
+            val duration = e.data["duration"] as Long
+            val createdBy = e.data["createdBy"]
             val name = e.data["name"].toString()
             val prep = e.data["prepDuration"] as Long
             val type = e.data["type"].toString()

@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mungomash.workouthelper.R
+import com.mungomash.workouthelper.model.Exercise
 import com.mungomash.workouthelper.model.Workout
 
 
-class SingleWorkoutAdapter(private val context: Context, private val workout: Workout): RecyclerView.Adapter<SingleWorkoutAdapter.SingleWorkoutViewHolder>() {
+class SingleWorkoutAdapter(private val context: Context, private val exercises: List<Exercise>): RecyclerView.Adapter<SingleWorkoutAdapter.SingleWorkoutViewHolder>() {
 
     class SingleWorkoutViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val title: TextView = view.findViewById(R.id.exercise_name)
@@ -26,11 +27,11 @@ class SingleWorkoutAdapter(private val context: Context, private val workout: Wo
     }
 
     override fun onBindViewHolder(holder: SingleWorkoutViewHolder, position: Int) {
-        val item = workout.exercises!![position]
-//        holder.title.text = item.name
-//        holder.duration.text = (item.duration / 1000).toString() + "s"
-//        holder.rest.text = "Rest: " + (item.prep / 1000).toString() + "s"
+        val item = exercises[position]
+        holder.title.text = item.name
+        holder.duration.text = (item.duration / 1000).toString() + "s"
+        holder.rest.text = "Rest: " + (item.prep / 1000).toString() + "s"
     }
 
-    override fun getItemCount() = workout.exercises!!.size
+    override fun getItemCount() = exercises.size
 }

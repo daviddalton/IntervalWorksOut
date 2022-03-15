@@ -3,6 +3,7 @@ package com.mungomash.workouthelper.ui.home
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.mungomash.workouthelper.R
 import com.mungomash.workouthelper.WorkoutActivity
 import com.mungomash.workouthelper.adapter.WorkoutAdapter
@@ -45,16 +49,14 @@ class HomeFragment : Fragment(), OnSuccessListener<QuerySnapshot> {
     }
 
     override fun onSuccess(workouts: QuerySnapshot) {
-        var workoutList = arrayListOf<Workout>()
+        val workoutList = arrayListOf<Workout>()
 
         for (w in workouts) {
             val name = w.data["name"].toString()
             //probably not going to work...need to make sure we build this out right
-            val exerciseRef = w.data["exercises"]
+            val exerciseRef: List<String> = w.data["exercises"] as List<String>
 
-            Log.d(TAG, "$exerciseRef")
-
-            workoutList.add(Workout(w.id, name, arrayOf(ExerciseRef("exercises/1PaZVGd0oPMjccTBpO2O"))))
+            workoutList.add(Workout(w.id, name, exerciseRef))
         }
         recyclerView?.adapter = WorkoutAdapter(WorkoutAdapter.OnClickListener { item ->
             handleClick(item)

@@ -31,21 +31,21 @@ class MainActivity : AppCompatActivity() {
         val userId = intent.getStringExtra("userId")
 
         // Initialize data.
-        val myDataset = Datasource().loadSets()
+//        val myDataset = Datasource().loadSets()
 
         //val data = Datasource().getAllWorkouts(this)
 
         val user = FirebaseAuth.getInstance().currentUser
         // Datasource().getAllExercises(this)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-        recyclerView.adapter = WorkoutAdapter(WorkoutAdapter.OnClickListener { item ->
-            handleClick(item)
-        }, this, myDataset)
+//        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
+//        recyclerView.adapter = WorkoutAdapter(WorkoutAdapter.OnClickListener { item ->
+//            handleClick(item)
+//        }, this, myDataset)
 
         // Use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        recyclerView.setHasFixedSize(true)
+//        recyclerView.setHasFixedSize(true)
     }
 
     private fun handleClick(item: Workout) {

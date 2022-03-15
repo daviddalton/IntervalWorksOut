@@ -1,12 +1,9 @@
 package com.mungomash.workouthelper
 
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.mungomash.workouthelper.data.Datasource
 import com.mungomash.workouthelper.databinding.ActivityMainBinding
-import com.mungomash.workouthelper.model.Workout
 
 class WorkingOutActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -20,12 +17,12 @@ class WorkingOutActivity : AppCompatActivity() {
         val id = intent.getStringExtra("workoutId")
 
         // Initialize data.
-        val data = Datasource().workoutBasedOnId(id!!.toInt())
+//        val data = Datasource().workoutBasedOnId(id!!.toInt())
 
         val nameText: TextView = findViewById(R.id.exercise_title)
         val timer: TextView = findViewById(R.id.timer)
 
-        findViewById<TextView>(R.id.title_text).text = data.name
+//        findViewById<TextView>(R.id.title_text).text = data.name
         // findViewById<TextView>(R.id.type_text).text = this.getText(data.workoutType)
 
 //        runTimer(data, timer, nameText, 1)

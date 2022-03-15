@@ -1,5 +1,6 @@
 package com.mungomash.workouthelper.model
 
-data class Workout(val id: String, val name: String, val exercises: Array<ExerciseRef>?) {
+
+data class Workout(val id: String, val name: String, val exercises: List<Exercise>) {
 
 }

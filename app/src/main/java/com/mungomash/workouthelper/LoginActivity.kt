@@ -31,17 +31,17 @@ class LoginActivity : AppCompatActivity() {
 
         val signInButton = findViewById<Button>(R.id.sign_in)
         signInButton.setOnClickListener {
-            if (email.text.isNotEmpty()) {
-                if (password.text.isNotEmpty()) {
+//            if (email.text.isNotEmpty()) {
+//                if (password.text.isNotEmpty()) {
                     signIn()
-                }
-            }
+//                }
+//            }
         }
 
         val createNewButton = findViewById<Button>(R.id.create_new)
         createNewButton.setOnClickListener {
-            if (!email.text.isEmpty()) {
-                if (!password.text.isEmpty()) {
+            if (email.text.isNotEmpty()) {
+                if (password.text.isNotEmpty()) {
                     createAccount()
                 }
             }
@@ -82,7 +82,8 @@ class LoginActivity : AppCompatActivity() {
     private fun signIn() {
         val email: EditText = findViewById(R.id.editTextTextEmailAddress)
         val password: EditText = findViewById(R.id.editTextTextPassword)
-        auth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
+//        auth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
+        auth.signInWithEmailAndPassword("david@mungomash.com", "testing")
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
